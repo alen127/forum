@@ -1,12 +1,12 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
-const UserModel = require("../models/user");
+const UserModel = require("../models/user.model");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
     const users = await UserModel.find();
-    res.status(200).json(users);
+    res.json(users);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -16,24 +16,7 @@ router.get("/:id", async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(500).json({ message: err });
-  }
-});
-
-router.post("/", async (req, res) => {
-  try {
-    const { username, email, password, role, created_at } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await UserModel.create({
-      username,
-      email,
-      password: hashedPassword,
-      role,
-      created_at,
-    });
-    res.status(201).json(newUser);
+    res.json(user);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -43,7 +26,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const user = await UserModel.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
-    res.status(200).json({ message: "User successfully deleted" });
+    res.json({ message: "User successfully deleted" });
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -78,7 +61,7 @@ router.patch("/:id", async (req, res) => {
     );
     if (!updatedUser)
       return res.status(404).json({ message: "User not found" });
-    res.status(200).json(updatedUser);
+    res.json(updatedUser);
   } catch (err) {
     res.status(500).json({ message: err });
   }

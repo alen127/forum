@@ -1,11 +1,11 @@
 const express = require("express");
-const CommentModel = require("../models/comment");
+const CommentModel = require("../models/comment.model");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
     const comments = await CommentModel.find();
-    res.status(200).json(comments);
+    res.json(comments);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -15,7 +15,7 @@ router.get("/:id", async (req, res) => {
   try {
     const comment = await CommentModel.findById(req.params.id);
     if (!comment) return res.status(404).json({ message: "Comment not found" });
-    res.status(200).json(comment);
+    res.json(comment);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -40,7 +40,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const comment = await CommentModel.findByIdAndDelete(req.params.id);
     if (!comment) return res.status(404).json({ message: "Comment not found" });
-    res.status(200).json({ message: "Comment successfully deleted" });
+    res.json({ message: "Comment successfully deleted" });
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -72,7 +72,7 @@ router.patch("/:id", async (req, res) => {
     );
     if (!updatedComment)
       return res.status(404).json({ message: "Comment not found" });
-    res.status(200).json(updatedComment);
+    res.json(updatedComment);
   } catch (err) {
     res.status(500).json({ message: err });
   }

@@ -1,11 +1,11 @@
 const express = require("express");
-const CategoryModel = require("../models/category");
+const CategoryModel = require("../models/category.model");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
     const categories = await CategoryModel.find();
-    res.status(200).json(categories);
+    res.json(categories);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -16,7 +16,7 @@ router.get("/:id", async (req, res) => {
     const category = await CategoryModel.findById(req.params.id);
     if (!category)
       return res.status(404).json({ message: "Category not found" });
-    res.status(200).json(category);
+    res.json(category);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -42,7 +42,7 @@ router.delete("/:id", async (req, res) => {
     const category = await CategoryModel.findByIdAndDelete(req.params.id);
     if (!category)
       return res.status(404).json({ message: "Category not found" });
-    res.status(200).json({ message: "Category successfully deleted" });
+    res.json({ message: "Category successfully deleted" });
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -76,7 +76,7 @@ router.patch("/:id", async (req, res) => {
     );
     if (!updatedCategory)
       return res.status(404).json({ message: "Category not found" });
-    res.status(200).json(updatedCategory);
+    res.json(updatedCategory);
   } catch (err) {
     res.status(500).json({ message: err });
   }

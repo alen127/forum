@@ -1,11 +1,11 @@
 const express = require("express");
-const ThreadModel = require("../models/thread");
+const ThreadModel = require("../models/thread.model");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const threads = await ThreadModel.find();
-    res.status(200).json(threads);
+    const threads = await ThreadModel.find({});
+    res.json(threads);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -15,7 +15,7 @@ router.get("/:id", async (req, res) => {
   try {
     const thread = await ThreadModel.findById(req.params.id);
     if (!thread) return res.status(404).json({ message: "Thread not found" });
-    res.status(200).json(thread);
+    res.json(thread);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -41,7 +41,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const thread = await ThreadModel.findByIdAndDelete(req.params.id);
     if (!thread) return res.status(404).json({ message: "Thread not found" });
-    res.status(200).json({ message: "Thread successfully deleted" });
+    res.json({ message: "Thread successfully deleted" });
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -74,7 +74,7 @@ router.patch("/:id", async (req, res) => {
     );
     if (!updatedThread)
       return res.status(404).json({ message: "Thread not found" });
-    res.status(200).json(updatedThread);
+    res.json(updatedThread);
   } catch (err) {
     res.status(500).json({ message: err });
   }
