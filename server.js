@@ -1,11 +1,13 @@
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const userRouter = require("./app/routes/users");
-const categoryRouter = require("./app/routes/categories");
-const threadRouter = require("./app/routes/threads");
-const commentRouter = require("./app/routes/comments");
+const userRouter = require("./app/routes/users.route");
+const categoryRouter = require("./app/routes/categories.route");
+const threadRouter = require("./app/routes/threads.route");
+const commentRouter = require("./app/routes/comments.route");
+const authRouter = require("./app/routes/auth.route");
 
 mongoose
   .connect(process.env.DB_CONNECTION_STRING)
@@ -20,13 +22,34 @@ db.once("open", () => {
 });
 
 app.use(express.json());
-//app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./public/"));
 
-app.use("/users", userRouter);
-app.use("/categories", categoryRouter);
-app.use("/threads", threadRouter);
-app.use("/comments", commentRouter);
+app.use("/auth", authRouter);
+app.use("/users", authenticateToken, userRouter);
+app.use("/categories", authenticateToken, categoryRouter);
+app.use("/threads", authenticateToken, threadRouter);
+app.use("/comments", authenticateToken, commentRouter);
+
+// JWT middleware
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1]; // Token from bearer header
+  if (!token)
+    return res
+      .status(401)
+      .json({ success: false, message: "Authorization token not found" });
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err)
+      return res.status(403).json({
+        success: false,
+        message: "Invalid token",
+      });
+    req.user = user;
+    next();
+  });
+}
 
 app.listen(process.env.PORT, () =>
   console.log(`Listening at http://localhost:${process.env.PORT}`)
