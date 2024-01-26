@@ -1,0 +1,32 @@
+<form (ngSubmit)="onLogin()" #loginForm="ngForm">
+  <label for="username">Username:</label>
+  <br />
+  <input
+    type="text"
+    name="username"
+    id="username"
+    required
+    minlength="3"
+    maxlength="20"
+    [(ngModel)]="user.username"
+    #username="ngModel"
+  />
+
+  <br /><br />
+
+  <label for="password">Password:</label>
+  <br />
+  <input
+    type="password"
+    name="password"
+    id="password"
+    required
+    minlength="4"
+    [(ngModel)]="user.password"
+    #password="ngModel"
+  />
+  <br />
+  <button type="submit" [disabled]="!loginForm.form.valid">Login</button>
+  <br />
+  <a routerLink="/register">Don't have an account yet? Register!</a>
+</form>
