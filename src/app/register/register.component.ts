@@ -13,12 +13,14 @@ import { NgIf } from '@angular/common';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  constructor(private authService: AuthService, private router:Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
   user: User = {};
-  registerSucess=false;
+  registerSucess = false;
+  message = '';
   onRegister() {
-    this.authService.register(this.user).subscribe(()=>{
-      this.router.navigate(["login"]);
+    this.authService.register(this.user).subscribe({
+      next: () => this.router.navigate(['login']),
+      error: (err) => (this.message = err.error.message),
     });
   }
 }

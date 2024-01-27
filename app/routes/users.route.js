@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
     const users = await UserModel.find();
     res.json(users);
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: "Couldnt get users", error: err });
   }
 });
 
@@ -18,7 +18,7 @@ router.get("/:id", async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json(user);
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: "Couldnt get user", error: err });
   }
 });
 
@@ -28,7 +28,7 @@ router.delete("/:id", async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json({ message: "User successfully deleted" });
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: "Couldnt delete user", error: err });
   }
 });
 
@@ -63,7 +63,7 @@ router.patch("/:id", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     res.json(updatedUser);
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: "Couldnt update user", error: err });
   }
 });
 

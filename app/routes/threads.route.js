@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
     const threads = await ThreadModel.find({});
     res.json(threads);
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: "Couldnt get thread", error: err });
   }
 });
 
@@ -17,7 +17,7 @@ router.get("/:id", async (req, res) => {
     if (!thread) return res.status(404).json({ message: "Thread not found" });
     res.json(thread);
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: "Couldnt get thread", error: err });
   }
 });
 
@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
     });
     res.status(201).json(newThread);
   } catch (err) {
-    res.status(400).json({ message: err });
+    res.status(400).json({ message: "Couldnt add thread", error: err });
   }
 });
 
@@ -43,7 +43,7 @@ router.delete("/:id", async (req, res) => {
     if (!thread) return res.status(404).json({ message: "Thread not found" });
     res.json({ message: "Thread successfully deleted" });
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: "Couldnt delete thread", error: err });
   }
 });
 
@@ -76,7 +76,7 @@ router.patch("/:id", async (req, res) => {
       return res.status(404).json({ message: "Thread not found" });
     res.json(updatedThread);
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: "Couldnt update thread", error: err });
   }
 });
 

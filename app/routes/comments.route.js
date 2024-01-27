@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
     const comments = await CommentModel.find();
     res.json(comments);
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: "Couldnt get comments", error: err });
   }
 });
 
@@ -17,7 +17,7 @@ router.get("/:id", async (req, res) => {
     if (!comment) return res.status(404).json({ message: "Comment not found" });
     res.json(comment);
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: "Couldnt get comment", error: err });
   }
 });
 
@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
     });
     res.status(201).json(newComment);
   } catch (err) {
-    res.status(400).json({ message: err });
+    res.status(500).json({ message: "Couldnt add comment", error: err });
   }
 });
 
@@ -42,7 +42,7 @@ router.delete("/:id", async (req, res) => {
     if (!comment) return res.status(404).json({ message: "Comment not found" });
     res.json({ message: "Comment successfully deleted" });
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: "Couldnt delete comment", error: err });
   }
 });
 
@@ -74,7 +74,7 @@ router.patch("/:id", async (req, res) => {
       return res.status(404).json({ message: "Comment not found" });
     res.json(updatedComment);
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: "Couldnt update comment", error: err });
   }
 });
 

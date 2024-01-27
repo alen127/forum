@@ -28,5 +28,7 @@
   <br />
   <button type="submit" [disabled]="!loginForm.form.valid">Login</button>
   <br />
+  <div class="message" *ngIf="message">{{ message }}</div>
+  <br />
   <a routerLink="/register">Don't have an account yet? Register!</a>
 </form>
