@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './forum.component.html',
-  styleUrl: './forum.component.css'
+  styleUrl: './forum.component.css',
 })
-export class ForumComponent {
-
-}
+export class ForumComponent {}
