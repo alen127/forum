@@ -45,7 +45,10 @@
   <br />
   <button type="submit" [disabled]="!registerForm.form.valid">Register</button>
   <br />
-  <div class="error" *ngIf="message">{{ message }}</div>
+  @if (message) {
+  <div class="error">{{ message }}</div>
+
+  }
   <br />
   <a routerLink="/login">Already have an account? Login!</a>
 </form>
