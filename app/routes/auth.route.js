@@ -26,7 +26,6 @@ router.post("/register", async (req, res) => {
     res.status(500).json({ message: "Failed to register", error: err });
   }
 });
-
 router.post("/login", async (req, res) => {
   //Authenticate user
   let user;
