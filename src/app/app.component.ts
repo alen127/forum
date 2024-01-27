@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -10,9 +10,23 @@ import { AuthService } from './auth.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
   ngOnInit(): void {
-    this.authService.whoAmI().subscribe((res) => console.log(res));
+    this.authService.whoAmI().subscribe({
+      next: () => {
+        if (
+          this.router.routerState.snapshot.url == '/register' ||
+          this.router.routerState.snapshot.url == '/login'
+        ) {
+          this.router.navigate(['forum']);
+        }
+      },
+      error: () => {
+        this.authService.logout();
+        if (this.router.routerState.snapshot.url != '/register')
+          this.router.navigate(['login']);
+      },
+    });
   }
   title = 'forum';
 }

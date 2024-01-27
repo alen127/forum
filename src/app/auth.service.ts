@@ -11,8 +11,11 @@ export class AuthService {
   private userSubject: BehaviorSubject<User | null> =
     new BehaviorSubject<User | null>(null);
   private token: string | null = null;
-  public user: Observable<User> = new Observable();
   constructor(private http: HttpClient) {}
+
+  getUser() {
+    return this.userSubject.asObservable();
+  }
 
   register(user: User) {
     return this.http.post(`${environment.apiUrl}/auth/register`, user);
@@ -26,6 +29,11 @@ export class AuthService {
       })
     );
   }
+  logout() {
+    this.token = null;
+    this.userSubject.next(null);
+    localStorage.removeItem('token');
+  }
 
   getAuthToken() {
     if (localStorage.getItem('token')) {
@@ -35,11 +43,10 @@ export class AuthService {
   }
 
   whoAmI() {
-    if (this.getAuthToken()) {
-      return this.http
-        .get(`${environment.apiUrl}/auth/me`)
-        .pipe(tap((res) => console.log(res)));
-    }
-    return new Observable((observer) => observer.next({ status: 100 }));
+    return this.http.get(`${environment.apiUrl}/auth/me`).pipe(
+      tap((user) => {
+        this.userSubject.next(user as User);
+      })
+    );
   }
 }
