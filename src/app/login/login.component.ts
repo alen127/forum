@@ -18,7 +18,7 @@ export class LoginComponent {
   onLogin() {
     this.authService.login(this.user).subscribe({
       next: () => {
-        this.router.navigate(['/forum']);
+        this.router.navigate(['forum']);
       },
       error: (err) => (this.message = err.error.message),
     });
