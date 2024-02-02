@@ -15,8 +15,8 @@ export class CategoryService {
 
   public init() {
     return this.http
-      .get(this.categoryUrl)
-      .subscribe((categories: any) => this.categorySubject.next(categories));
+      .get<Category[]>(this.categoryUrl)
+      .subscribe((categories) => this.categorySubject.next(categories));
   }
   public getCategories() {
     return this.categorySubject.asObservable();
