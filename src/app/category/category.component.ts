@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../category.service';
-import { Observable } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
 import { Category } from '../models/category.model';
 
 @Component({
@@ -10,11 +8,6 @@ import { Category } from '../models/category.model';
   templateUrl: './category.component.html',
   styleUrl: './category.component.css',
 })
-export class CategoryComponent implements OnInit {
-  public categories = new Observable<Category[]>();
-  constructor(private categoryService: CategoryService) {}
-  ngOnInit(): void {
-    this.categoryService.init();
-    this.categories = this.categoryService.getCategories();
-  }
+export class CategoryComponent {
+  @Input() category: Category | null = null;
 }

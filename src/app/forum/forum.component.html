@@ -1,1 +1,8 @@
-<p>forum works!</p>
+<app-navbar></app-navbar>
+<div class="container">
+  <ul>
+    @for (category of categories | async; track category._id) {
+    <app-category [category]="category"></app-category>
+    }
+  </ul>
+</div>
