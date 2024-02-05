@@ -1,0 +1,11 @@
+@if(category){
+<a [routerLink]="['/forum', category._id]">
+  <div class="category card">
+    <div class="card-body">
+      <h5>{{ category.name }}</h5>
+      <h6>{{ category.description }}</h6>
+      <p>Created by {{ category.user_id | user | async }}</p>
+    </div>
+  </div>
+</a>
+}
