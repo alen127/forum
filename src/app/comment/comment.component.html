@@ -1,0 +1,9 @@
+@if(comment){
+<div class="category card">
+  <div class="card-body">
+    <h5>{{ comment.user_id | user | async }}</h5>
+    <p>{{ comment.content }}</p>
+    <p>{{ comment.created_at | date : "h:mm, dd.MM.yyyy" }}</p>
+  </div>
+</div>
+}
