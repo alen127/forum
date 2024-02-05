@@ -1,0 +1,19 @@
+<app-navbar></app-navbar>
+<div class="container">
+  @if(thread | async; as thread){
+  <div class="thread card">
+    <div class="card-body">
+      <h3>{{ thread.title }}</h3>
+      <h4>{{ thread.content }}</h4>
+      <p>Posted by {{ thread.user_id | user | async }}</p>
+      <p>At {{ thread.created_at | date : "h:mm, dd.MM.yyyy" }}</p>
+    </div>
+  </div>
+
+  }
+  <ul>
+    @for (comment of comments | async; track comment._id) {
+    <app-comment [comment]="comment"></app-comment>
+    }
+  </ul>
+</div>

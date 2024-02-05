@@ -1,0 +1,11 @@
+@if(thread){
+<a [routerLink]="['./', thread._id]">
+  <div class="category card">
+    <div class="card-body">
+      <h5>{{ thread.title }}</h5>
+      <p>Created by {{ thread.user_id | user | async }}</p>
+      <p>{{ thread.created_at | date : "h:mm, dd.MM.YYYY" }}</p>
+    </div>
+  </div>
+</a>
+}
