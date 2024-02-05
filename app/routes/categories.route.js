@@ -1,5 +1,6 @@
 const express = require("express");
 const CategoryModel = require("../models/category.model");
+const ThreadModel = require("../models/thread.model");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -19,6 +20,16 @@ router.get("/:id", async (req, res) => {
     res.json(category);
   } catch (err) {
     res.status(500).json({ message: "Couldnt find category", error: err });
+  }
+});
+
+router.get("/:id/threads", async (req, res) => {
+  try {
+    const threads = await ThreadModel.find({ category_id: req.params.id });
+    if (!threads) return res.status(404).json({ message: "Threads not found" });
+    res.json(threads);
+  } catch (err) {
+    res.status(500).json({ message: "Couldnt find threads", error: err });
   }
 });
 

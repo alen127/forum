@@ -1,5 +1,6 @@
 const express = require("express");
 const ThreadModel = require("../models/thread.model");
+const CommentModel = require("../models/comment.model");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -18,6 +19,17 @@ router.get("/:id", async (req, res) => {
     res.json(thread);
   } catch (err) {
     res.status(500).json({ message: "Couldnt get thread", error: err });
+  }
+});
+
+router.get("/:id/comments", async (req, res) => {
+  try {
+    const comments = await CommentModel.find({ thread_id: req.params.id });
+    if (!comments)
+      return res.status(404).json({ message: "Comments not found" });
+    res.json(comments);
+  } catch (err) {
+    res.status(500).json({ message: "Couldnt find comments", error: err });
   }
 });
 
