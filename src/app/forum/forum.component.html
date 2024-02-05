@@ -2,7 +2,7 @@
 <div class="container">
   <ul>
     @for (category of categories | async; track category._id) {
-    <app-category [category]="category"></app-category>
+    <app-category-preview [category]="category"></app-category-preview>
     }
   </ul>
 </div>

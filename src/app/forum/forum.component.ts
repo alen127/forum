@@ -5,11 +5,12 @@ import { Category } from '../models/category.model';
 import { AsyncPipe } from '@angular/common';
 import { CategoryService } from '../category.service';
 import { CategoryComponent } from '../category/category.component';
+import { CategoryPreviewComponent } from '../category-preview/category-preview.component';
 
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [NavbarComponent, AsyncPipe, CategoryComponent],
+  imports: [NavbarComponent, AsyncPipe, CategoryPreviewComponent],
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.css',
 })
