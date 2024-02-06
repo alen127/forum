@@ -9,16 +9,39 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CategoryService {
   private categoryUrl = environment.apiUrl + '/categories';
-  private categorySubject = new BehaviorSubject<Category[]>([]);
+  private categoriesSubject = new BehaviorSubject<Category[]>([]);
+  categories$ = this.categoriesSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
-
-  public init() {
-    return this.http
-      .get<Category[]>(this.categoryUrl)
-      .subscribe((categories) => this.categorySubject.next(categories));
+  constructor(private http: HttpClient) {
+    this.loadCategories();
   }
-  public getCategories() {
-    return this.categorySubject.asObservable();
+
+  // Improved initialization method
+  loadCategories() {
+    this.http.get<Category[]>(this.categoryUrl).subscribe({
+      next: (categories) => this.categoriesSubject.next(categories),
+      error: (error) => {
+        console.log('Failed to get categories', error);
+      },
+    });
+  }
+
+  // Improved delete method with state update
+  deleteCategory(id: string) {
+    this.http.delete(`${this.categoryUrl}/${id}`).subscribe({
+      next: () => this.loadCategories(),
+      error: (error) => {
+        console.error('Failed to delete category', error);
+      },
+    });
+  }
+
+  editCategory(id: string, category: Category) {
+    this.http.patch<Category>(`${this.categoryUrl}/${id}`, category).subscribe({
+      next: () => this.loadCategories(),
+      error: (error) => {
+        console.error('Failed to update category', error);
+      },
+    });
   }
 }
