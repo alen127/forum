@@ -6,7 +6,7 @@
       <h3>{{ thread.title }}</h3>
       <h4>{{ thread.content }}</h4>
       <p>Posted by {{ thread.user_id | user | async }}</p>
-      <p>At {{ thread.created_at | date : "h:mm, dd.MM.yyyy" }}</p>
+      <p>At {{ thread.created_at | date : "hh:mm, dd.MM.yyyy" }}</p>
     </div>
   </div>
 
