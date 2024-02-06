@@ -11,6 +11,7 @@ export class AuthService {
   private userSubject: BehaviorSubject<User | null> =
     new BehaviorSubject<User | null>(null);
   private token: string | null = null;
+  user$ = this.userSubject.asObservable();
   constructor(private http: HttpClient) {}
 
   whoAmI() {
@@ -51,7 +52,12 @@ export class AuthService {
     }
     return this.token;
   }
-  getUser() {
-    return this.userSubject.asObservable();
+
+  isAdmin() {
+    const user = this.userSubject.getValue();
+    if (user && user.role === 'admin') {
+      return true;
+    }
+    return false;
   }
 }
