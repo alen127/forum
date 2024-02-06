@@ -14,12 +14,10 @@ import { CategoryPreviewComponent } from '../category-preview/category-preview.c
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.css',
 })
-export class ForumComponent implements OnInit {
-  categories: Observable<Category[]> = new Observable<Category[]>();
+export class ForumComponent {
+  categories: Observable<Category[]>;
 
-  constructor(private categoryService: CategoryService) {}
-  ngOnInit(): void {
-    this.categoryService.init();
-    this.categories = this.categoryService.getCategories();
+  constructor(private categoryService: CategoryService) {
+    this.categories = categoryService.categories$;
   }
 }
