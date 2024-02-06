@@ -1,11 +1,37 @@
-@if(category){
-<a [routerLink]="['/forum', category._id]">
-  <div class="category card">
+@if(category && editedCategory){
+<div class="category card">
+  @if(!isBeingEdited){
+  <a [routerLink]="['/forum', category._id]">
     <div class="card-body">
       <h5>{{ category.name }}</h5>
       <h6>{{ category.description }}</h6>
-      <p>Created by {{ category.user_id | user | async }}</p>
-    </div>
+    </div> </a
+  >} @else {
+  <div class="card-body">
+    <input
+      type="text"
+      name="editedName"
+      id="editedName"
+      [(ngModel)]="editedCategory.name"
+    />
+    <br />
+    <input
+      type="text"
+      name="editedDescription"
+      id="editedDescription"
+      [(ngModel)]="editedCategory.description"
+      size="50rem"
+    />
+    <br />
+    <button (click)="onEdit()">Confirm</button>
   </div>
-</a>
+  } @if(userIsAdmin){
+  <div class="management">
+    <button (click)="isBeingEdited = !isBeingEdited">
+      {{ isBeingEdited ? "Cancel" : "Edit" }}
+    </button>
+    <button (click)="onDelete()">Delete</button>
+  </div>
+  }
+</div>
 }
