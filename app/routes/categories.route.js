@@ -26,7 +26,8 @@ router.get("/:id", async (req, res) => {
 router.get("/:id/threads", async (req, res) => {
   try {
     const threads = await ThreadModel.find({ category_id: req.params.id });
-    if (!threads) return res.status(404).json({ message: "Threads not found" });
+    if (threads.length === 0)
+      return res.status(404).json({ message: "Threads not found" });
     res.json(threads);
   } catch (err) {
     res.status(500).json({ message: "Couldnt find threads", error: err });

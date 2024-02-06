@@ -25,7 +25,7 @@ router.get("/:id", async (req, res) => {
 router.get("/:id/comments", async (req, res) => {
   try {
     const comments = await CommentModel.find({ thread_id: req.params.id });
-    if (!comments)
+    if (comments.length === 0)
       return res.status(404).json({ message: "Comments not found" });
     res.json(comments);
   } catch (err) {
