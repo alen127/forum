@@ -24,6 +24,7 @@ export class AuthService {
         }
       }),
       catchError((error: any) => {
+        console.error('Failed to authenticate', error);
         this.logout();
         return of(null);
       })
