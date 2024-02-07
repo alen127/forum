@@ -12,7 +12,9 @@ export class AuthService {
     new BehaviorSubject<User | null>(null);
   private token: string | null = null;
   user$ = this.userSubject.asObservable();
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.token = localStorage.getItem('token');
+  }
 
   whoAmI() {
     return this.http.get<User>(`${environment.apiUrl}/auth/me`).pipe(
@@ -47,7 +49,7 @@ export class AuthService {
   }
 
   getAuthToken() {
-    if (localStorage.getItem('token')) {
+    if (!this.token) {
       this.token = localStorage.getItem('token');
     }
     return this.token;
