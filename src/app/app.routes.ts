@@ -8,9 +8,17 @@ import { ThreadComponent } from './thread/thread.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/forum', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'forum', component: ForumComponent, canActivate: [authGuard] },
-  { path: 'forum/:category_id', component: CategoryComponent },
-  { path: 'forum/:category_id/:thread_id', component: ThreadComponent },
+  {
+    path: 'forum/:category_id',
+    component: CategoryComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'forum/:category_id/:thread_id',
+    component: ThreadComponent,
+    canActivate: [authGuard],
+  },
 ];
