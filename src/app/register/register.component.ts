@@ -13,11 +13,11 @@ import { AuthService } from '../auth.service';
 })
 export class RegisterComponent {
   constructor(private authService: AuthService, private router: Router) {}
-  user: User = {};
+  user: Partial<User> = {};
   registerSucess = false;
   message = '';
   onRegister() {
-    this.authService.register(this.user).subscribe({
+    this.authService.register(this.user as User).subscribe({
       next: () => this.router.navigate(['login']),
       error: (err) => (this.message = err.error.message),
     });

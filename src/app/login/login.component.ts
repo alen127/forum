@@ -12,11 +12,11 @@ import { AuthService } from '../auth.service';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  user: User = {};
+  user: Partial<User> = {};
   message = '';
   constructor(private authService: AuthService, private router: Router) {}
   onLogin() {
-    this.authService.login(this.user).subscribe({
+    this.authService.login(this.user as User).subscribe({
       next: () => {
         this.router.navigate(['forum']);
       },
