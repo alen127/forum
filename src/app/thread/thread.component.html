@@ -3,17 +3,45 @@
   @if(thread | async; as thread){
   <div class="thread card">
     <div class="card-body">
+      @if(!isBeingEdited){
       <h3>{{ thread.title }}</h3>
       <h4>{{ thread.content }}</h4>
+      }@else if (isBeingEdited && editedThread){
+      <form (ngSubmit)="onSubmit()">
+        <input
+          type="text"
+          name="title"
+          id="title"
+          [(ngModel)]="editedThread.title"
+        />
+        <br />
+        <textarea
+          name="content"
+          id="content"
+          cols="30"
+          rows="10"
+          [(ngModel)]="editedThread.content"
+        ></textarea>
+        <br />
+        <button type="submit">Confirm</button>
+      </form>
+      }
       <p>Posted by {{ thread.user_id | user | async }}</p>
       <p>At {{ thread.created_at | date : "hh:mm, dd.MM.yyyy" }}</p>
     </div>
+    @if(user|async;as user) { @if(thread.user_id === user._id){
+    <div class="management">
+      <button (click)="onEdit()">
+        {{ isBeingEdited ? "Cancel" : "Edit" }}
+      </button>
+    </div>
+    }}
   </div>
-
-  }
+  } @if(comments|async; as comments){
   <ul>
-    @for (comment of comments | async; track comment._id) {
+    @for (comment of comments; track comment._id) {
     <app-comment [comment]="comment"></app-comment>
     }
   </ul>
+  }
 </div>

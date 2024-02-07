@@ -1,11 +1,16 @@
 @if(thread){
-<a [routerLink]="['./', thread._id]">
-  <div class="category card">
+<div class="thread card">
+  <a [routerLink]="['./', thread._id]">
     <div class="card-body">
       <h5>{{ thread.title }}</h5>
       <p>Created by {{ thread.user_id | user | async }}</p>
       <p>{{ thread.created_at | date : "hh:mm, dd.MM.YYYY" }}</p>
     </div>
+  </a>
+  @if(user | async;as user){ @if(user._id === thread.user_id){
+  <div class="management">
+    <button (click)="onDelete()">Delete</button>
   </div>
-</a>
+  } }
+</div>
 }

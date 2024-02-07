@@ -1,8 +1,41 @@
 <app-navbar></app-navbar>
 <div class="container">
+  @if(!isAdding && (threads | async); as threads){
   <ul>
-    @for (thread of threads | async; track thread._id) {
+    @for (thread of threads; track thread._id) {
     <app-thread-preview [thread]="thread"></app-thread-preview>
     }
   </ul>
+  }
+  <button (click)="isAdding = !isAdding">
+    {{ isAdding ? "Cancel" : "Add thread" }}
+  </button>
+  @if(isAdding && (user | async); as user){
+  <form (ngSubmit)="onSubmit()">
+    <label>Title: </label>
+    <input
+      type="text"
+      name="title"
+      minlength="4"
+      maxlength="30"
+      [(ngModel)]="newThread.title"
+    />
+    <br />
+    <label>Content: </label>
+    <textarea
+      name="content"
+      id="content"
+      cols="30"
+      rows="10"
+      minlength="10"
+      maxlength="5000"
+      [(ngModel)]="newThread.content"
+    ></textarea>
+    <br />
+    <button type="submit">Confirm</button>
+    @if(addThreadMessage){
+    <p>{{ addThreadMessage }}</p>
+    }
+  </form>
+  }
 </div>
