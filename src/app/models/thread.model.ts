@@ -4,5 +4,5 @@ export interface Thread {
   content: string;
   category_id: string;
   user_id: string;
-  created_at: Date;
+  created_at?: Date;
 }
