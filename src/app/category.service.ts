@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { Category } from './models/category.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +21,21 @@ export class CategoryService {
     this.http.get<Category[]>(this.categoryUrl).subscribe({
       next: (categories) => this.categoriesSubject.next(categories),
       error: (error) => {
-        console.log('Failed to get categories', error);
+        console.error('Failed to get categories', error);
       },
     });
+  }
+
+  addCategory(category: Category) {
+    return this.http.post<Category>(this.categoryUrl, category).pipe(
+      tap(() => {
+        this.loadCategories();
+      }),
+      catchError((error) => {
+        console.error('Failed to add category', error);
+        return of(null);
+      })
+    );
   }
 
   // Improved delete method with state update

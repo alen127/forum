@@ -1,8 +1,39 @@
 <app-navbar></app-navbar>
 <div class="container">
+  @if(categories | async;as categories){
   <ul>
-    @for (category of categories | async; track category._id) {
+    @for (category of categories; track category._id) {
     <app-category-preview [category]="category"></app-category-preview>
     }
   </ul>
+  }
+  <button (click)="isAdding = !isAdding">
+    {{ isAdding ? "Cancel" : "Add category" }}
+  </button>
+  @if(isAdding && (user | async);as user){
+  <form (ngSubmit)="onSubmit()">
+    <label>Name</label>
+    <input
+      type="text"
+      name="name"
+      minlength="4"
+      maxlength="30"
+      [(ngModel)]="newCategory.name"
+    />
+    <br />
+    <label>Description</label>
+    <input
+      type="text"
+      name="description"
+      minlength="10"
+      maxlength="100"
+      [(ngModel)]="newCategory.description"
+    />
+    <br />
+    <button type="submit">Confirm</button>
+    @if(addCategoryMessage){
+    <p>{{ addCategoryMessage }}</p>
+    }
+  </form>
+  }
 </div>
