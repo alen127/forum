@@ -1,4 +1,4 @@
-@if(category && editedCategory){
+@if(category){
 <div class="category card">
   @if(!isBeingEdited){
   <a [routerLink]="['/forum', category._id]">
@@ -6,7 +6,7 @@
       <h5>{{ category.name }}</h5>
       <h6>{{ category.description }}</h6>
     </div> </a
-  >} @else {
+  >} @else if(isBeingEdited && editedCategory){
   <div class="card-body">
     <input
       type="text"
@@ -27,7 +27,7 @@
   </div>
   } @if(userIsAdmin){
   <div class="management">
-    <button (click)="isBeingEdited = !isBeingEdited">
+    <button (click)="onBeginEdit()">
       {{ isBeingEdited ? "Cancel" : "Edit" }}
     </button>
     <button (click)="onDelete()">Delete</button>

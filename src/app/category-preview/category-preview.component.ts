@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Category } from '../models/category.model';
 import { RouterLink } from '@angular/router';
 import { UserPipe } from '../user.pipe';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { AuthService } from '../auth.service';
 import { CategoryService } from '../category.service';
 import { FormsModule } from '@angular/forms';
@@ -24,13 +24,18 @@ export class CategoryPreviewComponent implements OnInit {
     private categoryService: CategoryService
   ) {}
   ngOnInit(): void {
-    this.editedCategory = this.category;
     this.userIsAdmin = this.authService.isAdmin();
   }
   onDelete() {
     if (this.category && this.category._id) {
       this.categoryService.deleteCategory(this.category._id);
     }
+  }
+  onBeginEdit() {
+    if (this.category && !this.editedCategory) {
+      this.editedCategory = { ...this.category };
+    }
+    this.isBeingEdited = !this.isBeingEdited;
   }
   onEdit() {
     if (this.editedCategory && this.editedCategory._id) {
