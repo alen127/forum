@@ -2,8 +2,26 @@
 <div class="category card">
   <div class="card-body">
     <h5>{{ comment.user_id | user | async }}</h5>
+    @if(!isBeingEdited){
     <p>{{ comment.content }}</p>
-    <p>{{ comment.created_at | date : "hh:mm, dd.MM.yyyy" }}</p>
+    } @else if(isBeingEdited && editedComment){
+    <form (ngSubmit)="onEdit()">
+      <input type="text" name="content" [(ngModel)]="editedComment.content" />
+      <br />
+      <button type="submit">Confirm</button>
+    </form>
+    }
+    <p>At {{ comment.created_at | date : "HH:mm, dd.MM.yyyy" }}</p>
   </div>
+  @if(user|async;as user){ @if(user._id === comment.user_id){
+  <div class="management">
+    <button (click)="onBeginEdit()">
+      {{ isBeingEdited ? "Cancel" : "Edit" }}
+    </button>
+    <button (click)="onDelete()">Delete</button>
+  </div>
+  @if (errorMessage) {
+  <p>{{ errorMessage }}</p>
+  } }}
 </div>
 }

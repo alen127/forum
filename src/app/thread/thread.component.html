@@ -7,7 +7,7 @@
       <h3>{{ thread.title }}</h3>
       <h4>{{ thread.content }}</h4>
       }@else if (isBeingEdited && editedThread){
-      <form (ngSubmit)="onSubmit()">
+      <form (ngSubmit)="onEdit()">
         <input
           type="text"
           name="title"
@@ -27,19 +27,31 @@
       </form>
       }
       <p>Posted by {{ thread.user_id | user | async }}</p>
-      <p>At {{ thread.created_at | date : "hh:mm, dd.MM.yyyy" }}</p>
+      <p>At {{ thread.created_at | date : "HH:mm, dd.MM.yyyy" }}</p>
     </div>
     @if(user|async;as user) { @if(thread.user_id === user._id){
     <div class="management">
-      <button (click)="onEdit()">
+      <button (click)="onBeginEdit()">
         {{ isBeingEdited ? "Cancel" : "Edit" }}
       </button>
     </div>
     }}
   </div>
-  } @if(comments|async; as comments){
+  <form class="add-comment" (ngSubmit)="onCommentSubmit()">
+    <textarea
+      name="content"
+      cols="50"
+      rows="4"
+      [(ngModel)]="newComment.content"
+    ></textarea>
+    <br />
+    <button type="submit">Post</button>
+  </form>
+  @if(newCommentMessage){
+  <p>{{ newCommentMessage }}</p>
+  } } @if(comments|async; as comments){
   <ul>
-    @for (comment of comments; track comment._id) {
+    @for (comment of comments | commentsSort; track comment._id) {
     <app-comment [comment]="comment"></app-comment>
     }
   </ul>
