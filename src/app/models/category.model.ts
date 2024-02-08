@@ -3,5 +3,5 @@ export interface Category {
   name: string;
   description: string;
   user_id: string;
-  created_at?: Date;
+  created_at?: Date | string;
 }

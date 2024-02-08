@@ -5,5 +5,5 @@ export interface User {
   email: string;
   role?: string;
   token?: string;
-  created_at?: Date;
+  created_at?: Date | string;
 }
