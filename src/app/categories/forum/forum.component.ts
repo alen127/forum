@@ -57,7 +57,7 @@ export class ForumComponent {
         this.newCategory = {};
       },
       error: (err) => {
-        this.addCategoryMessage = 'Failed to add category';
+        this.addCategoryMessage = err.error.message;
         console.error(err);
       },
     });
