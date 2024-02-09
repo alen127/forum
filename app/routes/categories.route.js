@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
     const categories = await CategoryModel.find();
     res.json(categories);
   } catch (err) {
-    res.status(500).json({ message: "Couldnt get categories", error: err });
+    res.status(500).json({ message: "Failed to get categories", error: err });
   }
 });
 
@@ -19,7 +19,7 @@ router.get("/:id", async (req, res) => {
       return res.status(404).json({ message: "Category not found" });
     res.json(category);
   } catch (err) {
-    res.status(500).json({ message: "Couldnt find category", error: err });
+    res.status(500).json({ message: "Failed to find category", error: err });
   }
 });
 
@@ -30,7 +30,7 @@ router.get("/:id/threads", async (req, res) => {
       return res.status(404).json({ message: "Threads not found" });
     res.json(threads);
   } catch (err) {
-    res.status(500).json({ message: "Couldnt find threads", error: err });
+    res.status(500).json({ message: "Failed to find threads", error: err });
   }
 });
 
@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
     });
     res.status(201).json(newCategory);
   } catch (err) {
-    res.status(400).json({ message: "Couldnt create category", error: err });
+    res.status(400).json({ message: "Failed to create category", error: err });
   }
 });
 
@@ -56,7 +56,7 @@ router.delete("/:id", async (req, res) => {
       return res.status(404).json({ message: "Category not found" });
     res.json({ message: "Category successfully deleted" });
   } catch (err) {
-    res.status(500).json({ message: "Couldnt delete category", error: err });
+    res.status(500).json({ message: "Failed to delete category", error: err });
   }
 });
 
@@ -90,7 +90,7 @@ router.patch("/:id", async (req, res) => {
       return res.status(404).json({ message: "Category not found" });
     res.json(updatedCategory);
   } catch (err) {
-    res.status(500).json({ message: "Couldnt update category", error: err });
+    res.status(500).json({ message: "Failed to update category", error: err });
   }
 });
 

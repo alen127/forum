@@ -31,7 +31,7 @@ router.post("/login", async (req, res) => {
   let user;
   try {
     user = await UserModel.findOne({ username: req.body.username });
-    if (!user) return res.status(404).json({ message: "Username not found" });
+    if (!user) return res.status(404).json({ message: "Wrong username" });
   } catch (err) {
     res.status(500).json({ message: "Couldnt find user", error: err });
   }
