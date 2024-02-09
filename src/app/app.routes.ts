@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { ForumComponent } from './forum/forum.component';
-import { authGuard } from './auth.guard';
-import { CategoryComponent } from './category/category.component';
-import { ThreadComponent } from './thread/thread.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { ForumComponent } from './categories/forum/forum.component';
+import { authGuard } from './auth/auth.guard';
+import { CategoryComponent } from './categories/category/category.component';
+import { ThreadComponent } from './threads/thread/thread.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
