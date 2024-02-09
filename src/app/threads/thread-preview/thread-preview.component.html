@@ -1,16 +1,21 @@
 @if(thread){
-<div class="thread card">
-  <a [routerLink]="['./', thread._id]">
+<article class="thread card">
+  <a [routerLink]="['./', thread._id]" class="thread-link text-decoration-none">
     <div class="card-body">
-      <h5>{{ thread.title }}</h5>
-      <p>Created by {{ thread.user_id | user | async }}</p>
-      <p>{{ thread.created_at | date : "HH:mm, dd.MM.YYYY" }}</p>
+      <h2 class="card-title">{{ thread.title }}</h2>
+      <div class="card-text text-dark">
+        Posted by
+        <strong> {{ thread.user_id | user | async }} </strong>
+      </div>
+      <div class="card-text text-dark">
+        {{ thread.created_at | date : "HH:mm, dd.MM.YYYY" }}
+      </div>
     </div>
   </a>
-  @if(user | async;as user){ @if(user._id === thread.user_id){
-  <div class="management">
-    <button (click)="onDelete()">Delete</button>
+  @if(user | async; as user && user._id === thread.user_id){
+  <div class="card-footer">
+    <button class="btn btn-danger" (click)="onDelete()">Delete</button>
   </div>
-  } }
-</div>
+  }
+</article>
 }

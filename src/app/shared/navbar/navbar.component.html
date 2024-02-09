@@ -1,17 +1,20 @@
 <nav class="navbar navbar-expand-sm bg-body-tertiary">
   <div class="container-fluid">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <a class="navbar-brand" routerLink="/forum">Forum</a>
+
+    <ul class="navbar-nav me-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/forum">Home</a>
+        <a class="nav-link" style="cursor: pointer" (click)="onLogout()"
+          >Logout</a
+        >
       </li>
-      <li class="nav-item">
-        <button class="nav-link" (click)="onLogout()">Logout</button>
-      </li>
-      @if(user | async; as user){
-      <li class="nav-item">
-        <p class="nav-link">{{ user.username }}</p>
-      </li>
-      }
     </ul>
+    @if(user | async; as user){
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <span class="nav-link">{{ user.username }}</span>
+      </li>
+    </ul>
+    }
   </div>
 </nav>

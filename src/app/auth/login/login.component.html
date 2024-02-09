@@ -1,36 +1,67 @@
 <form (ngSubmit)="onLogin()" #loginForm="ngForm">
-  <label for="username">Username:</label>
-  <br />
-  <input
-    type="text"
-    name="username"
-    id="username"
-    required
-    minlength="3"
-    maxlength="20"
-    [(ngModel)]="user.username"
-    #username="ngModel"
-  />
+  <div class="form-group">
+    <label for="username">Username:</label>
+    <input
+      type="text"
+      class="form-control"
+      [class.is-invalid]="
+        username.invalid && (username.dirty || username.touched)
+      "
+      id="username"
+      name="username"
+      required
+      minlength="3"
+      maxlength="20"
+      [(ngModel)]="user.username"
+      #username="ngModel"
+    />
+    @if(username.invalid && (username.dirty || username.touched)){
+    <div class="invalid-feedback">
+      @if(username.errors?.['required']){
+      <div>Username is required.</div>
+      } @if(username.errors?.['minlength']){
+      <div>Username must be at least 3 characters long.</div>
+      } @if(username.errors?.['maxlength']){
+      <div>Username must not exceed 20 characters.</div>
+      }
+    </div>
+    }
+  </div>
 
-  <br /><br />
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input
+      type="password"
+      class="form-control"
+      [class.is-invalid]="
+        password.invalid && (password.dirty || password.touched)
+      "
+      id="password"
+      name="password"
+      required
+      minlength="4"
+      [(ngModel)]="user.password"
+      #password="ngModel"
+    />
+    @if(password.invalid && (password.dirty || password.touched)){
+    <div class="invalid-feedback">
+      @if(password.errors?.['required']){
+      <div>Password is required.</div>
+      } @if(password.errors?.['minlength']){
+      <div>Password must be at least 4 characters long.</div>
+      }
+    </div>
+    }
+  </div>
 
-  <label for="password">Password:</label>
-  <br />
-  <input
-    type="password"
-    name="password"
-    id="password"
-    required
-    minlength="4"
-    [(ngModel)]="user.password"
-    #password="ngModel"
-  />
-  <br />
-  <button type="submit" [disabled]="!loginForm.form.valid">Login</button>
-  <br />
+  <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">
+    Login
+  </button>
   @if (message) {
-  <div class="message">{{ message }}</div>
+  <div class="alert alert-danger">{{ message }}</div>
   }
   <br />
-  <a routerLink="/register">Don't have an account yet? Register!</a>
+  <a routerLink="/register" class="text-decoration-none"
+    >Don't have an account yet? Register!</a
+  >
 </form>
