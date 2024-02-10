@@ -12,16 +12,16 @@ const categorySchema = new mongoose.Schema({
   },
 });
 
-// categorySchema.pre("findOneAndDelete", async function (next) {
-//   try {
-//     console.log("Deleting threads for category");
-//     await ThreadModel.deleteMany({ category_id: this._id });
-//     next();
-//   } catch (error) {
-//     console.log(error);
-//     next();
-//   }
-// });
+categorySchema.pre("findOneAndDelete", async function (next) {
+  try {
+    const categoryId = this.getQuery()._id;
+    await ThreadModel.deleteMany({ category_id: categoryId });
+    next();
+  } catch (error) {
+    console.log(error);
+    next();
+  }
+});
 
 const CategoryModel = mongoose.model("Category", categorySchema);
 

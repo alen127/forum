@@ -17,18 +17,36 @@ const threadSchema = new mongoose.Schema({
   created_at: { type: Date, default: Date.now },
 });
 
-// threadSchema.pre("findOneAndDelete", async function (next) {
-//   try {
-//     console.log("Deleting comments for thread");
-//     await CommentModel.deleteMany({
-//       thread_id: this._id,
-//     });
-//     next();
-//   } catch (error) {
-//     console.log(error);
-//     next(error);
-//   }
-// });
+threadSchema.pre("findOneAndDelete", async function (next) {
+  try {
+    const threadId = this.getQuery()._id;
+    await CommentModel.deleteMany({
+      thread_id: threadId,
+    });
+    next();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+threadSchema.pre("deleteMany", async function (next) {
+  try {
+    const query = this.getQuery();
+    const threads = await ThreadModel.find(query);
+    const threadIds = threads.map((thread) => thread._id);
+
+    const f = await CommentModel.deleteMany({
+      thread_id: { $in: threadIds },
+    });
+
+    console.log("deleted comments", threadIds, f);
+    next();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
 
 const ThreadModel = mongoose.model("Thread", threadSchema);
 
