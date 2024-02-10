@@ -8,6 +8,7 @@ const categoryRouter = require("./app/routes/categories.route");
 const threadRouter = require("./app/routes/threads.route");
 const commentRouter = require("./app/routes/comments.route");
 const authRouter = require("./app/routes/auth.route");
+const path = require("path");
 
 mongoose
   .connect(process.env.DB_CONNECTION_STRING)
@@ -23,13 +24,24 @@ db.once("open", () => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("./public/"));
+app.use(express.static(path.join(__dirname, "app", "public")));
 
 app.use("/auth", authRouter);
 app.use("/users", authenticateToken, userRouter);
 app.use("/categories", authenticateToken, categoryRouter);
 app.use("/threads", authenticateToken, threadRouter);
 app.use("/comments", authenticateToken, commentRouter);
+
+app.get("/*", function (req, res) {
+  res.sendFile(
+    path.join(__dirname, "app", "public", "index.html"),
+    function (err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+    }
+  );
+});
 
 app.listen(process.env.PORT, () =>
   console.log(`Listening at http://localhost:${process.env.PORT}`)
