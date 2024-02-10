@@ -15,7 +15,7 @@ const users = [
   },
   {
     _id: "65c2106088912121c3c9a29a",
-    username: "reg",
+    username: "regular",
     password: "$2b$10$cqe31s8a4KKFR1GXfIpX4u7UrLOwJsceN2GZ.mA.OJ.01usYSwAHS",
     email: "reg@gmail.com",
     created_at: "2024-02-06T10:56:32.368Z",
