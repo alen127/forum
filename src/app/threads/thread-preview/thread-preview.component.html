@@ -14,10 +14,10 @@
       </div>
     </div>
   </a>
-  @if(user | async; as user && user._id === thread.user_id){
+  @if(user | async; as user){ @if(user._id === thread.user_id){
   <div class="card-footer">
     <button class="btn btn-danger" (click)="onDelete()">Delete</button>
   </div>
-  }
+  } }
 </article>
 }

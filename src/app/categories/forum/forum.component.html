@@ -11,15 +11,14 @@
     </li>
     }
   </ul>
-  }
+  } @if(user|async;as user){ @if(user.role==="admin"){
   <button
     class="btn btn-success"
     [class.btn-danger]="isAdding"
     (click)="isAdding = !isAdding"
   >
-    {{ isAdding ? "Cancel" : "Add Category" }}
-  </button>
-  @if(isAdding && (user | async); as user){
+    {{ isAdding ? "Cancel" : "Add Category" }}</button
+  >} @if(isAdding){
   <form class="my-2" (ngSubmit)="onSubmit()" #addCategoryForm="ngForm">
     <div class="form-group">
       <input
@@ -86,5 +85,5 @@
     <div class="alert alert-info">{{ addCategoryMessage }}</div>
     }
   </form>
-  }
+  }}
 </div>
