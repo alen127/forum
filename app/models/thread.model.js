@@ -36,11 +36,9 @@ threadSchema.pre("deleteMany", async function (next) {
     const threads = await ThreadModel.find(query);
     const threadIds = threads.map((thread) => thread._id);
 
-    const f = await CommentModel.deleteMany({
+    await CommentModel.deleteMany({
       thread_id: { $in: threadIds },
     });
-
-    console.log("deleted comments", threadIds, f);
     next();
   } catch (error) {
     console.log(error);
