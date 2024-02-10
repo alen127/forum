@@ -1,54 +1,122 @@
 <app-navbar></app-navbar>
 <div class="container">
   @if(thread | async; as thread){
-  <div class="thread card">
+  <div class="thread card mt-3">
     <div class="card-body">
       @if(!isBeingEdited){
-      <h3>{{ thread.title }}</h3>
-      <h4>{{ thread.content }}</h4>
+      <h3 class="card-title">{{ thread.title }}</h3>
+      <div class="card-text">{{ thread.content }}</div>
       }@else if (isBeingEdited && editedThread){
-      <form (ngSubmit)="onEdit()">
-        <input
-          type="text"
-          name="title"
-          id="title"
-          [(ngModel)]="editedThread.title"
-        />
-        <br />
-        <textarea
-          name="content"
-          id="content"
-          cols="30"
-          rows="10"
-          [(ngModel)]="editedThread.content"
-        ></textarea>
-        <br />
-        <button type="submit">Confirm</button>
+      <form (ngSubmit)="onEdit()" #editThreadForm="ngForm">
+        <div class="form-group mb-3">
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="form-control"
+            placeholder="Title"
+            required
+            minlength="4"
+            maxlength="30"
+            #title="ngModel"
+            [class.is-invalid]="title.invalid && (title.dirty || title.touched)"
+            [(ngModel)]="editedThread.title"
+          />
+          @if(title.invalid && (title.dirty || title.touched)){
+          <div class="invalid-feedback">
+            @if(title.errors?.['required']){
+            <div>Title is required.</div>
+            } @if(title.errors?.['minlength']){
+            <div>Title must be at least 4 characters long.</div>
+            } @if(title.errors?.['maxlength']){
+            <div>Title must not exceed 30 characters.</div>
+            }
+          </div>
+          }
+        </div>
+        <div class="form-group mb-3">
+          <textarea
+            id="content"
+            name="content"
+            class="form-control"
+            rows="10"
+            placeholder="Content"
+            required
+            minlength="10"
+            maxlength="5000"
+            #content="ngModel"
+            [class.is-invalid]="
+              content.invalid && (content.dirty || content.touched)
+            "
+            [(ngModel)]="editedThread.content"
+          ></textarea>
+          @if(content.invalid && (content.dirty || content.touched)){
+          <div class="invalid-feedback">
+            @if(content.errors?.['required']){
+            <div>Content is required.</div>
+            } @if(content.errors?.['minlength']){
+            <div>Content must be at least 10 characters long.</div>
+            } @if(content.errors?.['maxlength']){
+            <div>Content must not exceed 5000 characters.</div>
+            }
+          </div>
+          }
+        </div>
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="!editThreadForm.valid"
+        >
+          Confirm
+        </button>
       </form>
       }
-      <p>Posted by {{ thread.user_id | user | async }}</p>
-      <p>At {{ thread.created_at | date : "HH:mm, dd.MM.yyyy" }}</p>
+      <div class="card-subtitle text-muted mt-2">
+        <div>
+          Posted by <strong>{{ thread.user_id | user | async }}</strong>
+        </div>
+        <div>{{ thread.created_at | date : "HH:mm, dd.MM.yyyy" }}</div>
+      </div>
     </div>
     @if(user|async;as user) { @if(thread.user_id === user._id){
-    <div class="management">
-      <button (click)="onBeginEdit()">
+    <div class="card-footer">
+      <button
+        (click)="onBeginEdit()"
+        class="btn"
+        [class]="isBeingEdited ? 'btn-danger' : 'btn-primary'"
+      >
         {{ isBeingEdited ? "Cancel" : "Edit" }}
       </button>
     </div>
     }}
   </div>
-  <form class="add-comment" (ngSubmit)="onCommentSubmit()">
-    <textarea
-      name="content"
-      cols="50"
-      rows="4"
-      [(ngModel)]="newComment.content"
-    ></textarea>
-    <br />
-    <button type="submit">Post</button>
+  <form
+    class="add-comment w-50"
+    (ngSubmit)="onCommentSubmit()"
+    #addCommentForm="ngForm"
+  >
+    <div class="form-group">
+      <textarea
+        name="content"
+        id="content"
+        class="form-control mt-2"
+        placeholder="Post a comment"
+        required
+        rows="4"
+        [(ngModel)]="newComment.content"
+        #content="ngModel"
+      ></textarea>
+    </div>
+    <button
+      type="submit"
+      class="btn btn-success mt-2"
+      [disabled]="!addCommentForm.valid"
+    >
+      Post
+    </button>
   </form>
   @if(newCommentMessage){
-  <p>{{ newCommentMessage }}</p>
+  <div class="alert alert-warning">{{ newCommentMessage }}</div>
   } } @if(comments|async; as comments){
   <ul>
     @for (comment of comments | commentsSort; track comment._id) {

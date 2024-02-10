@@ -3,8 +3,10 @@
   @if(!isBeingEdited){
   <a [routerLink]="['/forum', category._id]" class="text-decoration-none">
     <div class="card-body">
-      <h5 class="card-title">{{ category.name }}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{ category.description }}</h6>
+      <h3 class="card-title">{{ category.name }}</h3>
+      <div class="card-subtitle mb-2 text-muted">
+        {{ category.description }}
+      </div>
     </div>
   </a>
   } @else if(isBeingEdited && editedCategory){

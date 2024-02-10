@@ -2,13 +2,15 @@
 <article class="thread card">
   <a [routerLink]="['./', thread._id]" class="thread-link text-decoration-none">
     <div class="card-body">
-      <h2 class="card-title">{{ thread.title }}</h2>
-      <div class="card-text text-dark">
-        Posted by
-        <strong> {{ thread.user_id | user | async }} </strong>
-      </div>
-      <div class="card-text text-dark">
-        {{ thread.created_at | date : "HH:mm, dd.MM.YYYY" }}
+      <h3 class="card-title">{{ thread.title }}</h3>
+      <div class="card-subtitle text-muted">
+        <div>
+          Posted by
+          <strong> {{ thread.user_id | user | async }} </strong>
+        </div>
+        <div>
+          {{ thread.created_at | date : "HH:mm, dd.MM.YYYY" }}
+        </div>
       </div>
     </div>
   </a>
