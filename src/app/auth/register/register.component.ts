@@ -14,6 +14,7 @@ import { User } from '../../shared/models/user.model';
 export class RegisterComponent {
   constructor(private authService: AuthService, private router: Router) {}
   user: Partial<User> = {};
+  checkPassword: string = '';
   registerSucess = false;
   message = '';
   onRegister() {
