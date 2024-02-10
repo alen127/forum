@@ -1,15 +1,17 @@
 <app-navbar></app-navbar>
-<div class="container my-4">
+<div class="container">
   @if(!isAdding && (threads | async); as threads){
   <ul class="list-unstyled">
     @for (thread of threads; track thread._id) {
-    <li><app-thread-preview [thread]="thread"></app-thread-preview></li>
+    <li>
+      <app-thread-preview class="ms-2" [thread]="thread"></app-thread-preview>
+    </li>
     }
   </ul>
   } @if(!isAdding){
   <button
     class="btn"
-    [class]="isAdding ? 'btn-warning' : 'btn-primary'"
+    [class]="isAdding ? 'btn-warning' : 'btn-success'"
     (click)="isAdding = !isAdding"
   >
     {{ isAdding ? "Cancel" : "Add Thread" }}</button
