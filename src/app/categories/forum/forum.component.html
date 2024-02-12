@@ -1,6 +1,10 @@
 <app-navbar></app-navbar>
 <div class="container">
-  @if(categories | async; as categories){
+  @if(categories | async; as categories){ @if(categories.length===0){
+  <div class="container text-center fs-4 mt-2">
+    No categories found, add some!
+  </div>
+  }
   <ul class="list-unstyled">
     @for (category of categories; track category._id) {
     <li>
@@ -11,7 +15,7 @@
     </li>
     }
   </ul>
-  } @if(user|async;as user){ @if(user.role==="admin"){
+  }@else { } @if(user|async;as user){ @if(user.role==="admin"){
   <button
     class="btn btn-success"
     [class.btn-danger]="isAdding"

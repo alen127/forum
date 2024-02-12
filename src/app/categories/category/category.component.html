@@ -1,6 +1,8 @@
 <app-navbar></app-navbar>
 <div class="container">
-  @if(!isAdding && (threads | async); as threads){
+  @if(!isAdding && (threads | async); as threads){ @if(threads.length===0){
+  <div class="container text-center fs-4 mt-2">No threads found, add some!</div>
+  }
   <ul class="list-unstyled">
     @for (thread of threads; track thread._id) {
     <li>

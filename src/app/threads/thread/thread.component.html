@@ -117,7 +117,9 @@
   </form>
   @if(newCommentMessage){
   <div class="alert alert-warning">{{ newCommentMessage }}</div>
-  } } @if(comments|async; as comments){
+  } } @if(comments|async; as comments){ @if(comments.length===0){
+  <div class="container text-center mt-2">No comments found.</div>
+  }
   <ul>
     @for (comment of comments | commentsSort; track comment._id) {
     <app-comment [comment]="comment"></app-comment>
