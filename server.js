@@ -24,7 +24,7 @@ db.once("open", () => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "app", "public")));
+app.use(express.static(path.join(__dirname, "app", "public", "browser")));
 
 app.use("/auth", authRouter);
 app.use("/users", authenticateToken, userRouter);
@@ -34,7 +34,7 @@ app.use("/comments", authenticateToken, commentRouter);
 
 app.get("/*", function (req, res) {
   res.sendFile(
-    path.join(__dirname, "app", "public", "index.html"),
+    path.join(__dirname, "app", "public","browser", "index.html"),
     function (err) {
       if (err) {
         res.status(500).send(err);
