@@ -1,14 +1,27 @@
-# Forum
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.0.
+## About
+Fullstack SPA web app developed for one of my university classes using the MEAN stack. It is a simple forum with categories, threads and comments.
 
 ## Environment variables
 
-Create a .env file like so and run `node sever.js` to start the server:
+Create a .env file like so and run `node server.js` to start the server:
 ```
-DB_CONNECTION_STRING = YOUR_MONGODB_URL
-PORT = YOUR_PORT_OF_CHOICE
+DB_CONNECTION_STRING=mongodb://localhost:27017/dbname
+PORT=8080
+ACCESS_TOKEN_SECRET=example
 ```
+
+## Mock data
+You can run `node dbInit.js` to initialize the database with some sample data.
+It creates two users you can log in with, 1 with admin privileges and one without:
+  username: root
+  password: rootpass
+and
+  username: regular
+  password: regpass
+
+# Forum
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.0.
 
 ## Development server
 
