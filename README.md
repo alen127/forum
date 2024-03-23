@@ -10,7 +10,8 @@ PORT=8080
 ACCESS_TOKEN_SECRET=example
 ```
 
-Run `node dbInit.js` to initialize the database with some sample data.
+Run `npm install` to install all neccessary dependencies.
+When that is complete run `node dbInit.js` to initialize the database with some sample data.
 It creates two users you can log in with, one with admin privileges and the other without:
 ```
   username: root
