@@ -12,7 +12,7 @@ ACCESS_TOKEN_SECRET=example
 
 ## Mock data
 You can run `node dbInit.js` to initialize the database with some sample data.
-It creates two users you can log in with, 1 with admin privileges and one without:
+It creates two users you can log in with, one with admin privileges and the other without:
   username: root
   password: rootpass
 and
