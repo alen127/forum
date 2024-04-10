@@ -3,7 +3,12 @@ const UserModel = require("./app/models/user.model");
 const CategoryModel = require("./app/models/category.model");
 const ThreadModel = require("./app/models/thread.model");
 const CommentModel = require("./app/models/comment.model");
-require("dotenv").config();
+const {
+  MONGO_USER,
+  MONGO_PASSWORD,
+  MONGO_IP,
+  MONGO_PORT,
+} = require("./config/config.js");
 const users = [
   {
     _id: "65b42354021f3a7bf36dc323",
@@ -67,11 +72,24 @@ const comments = [
   },
 ];
 
-mongoose.connect(process.env.DB_CONNECTION_STRING);
+mongoose.connect(
+  `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/forum?authSource=admin`,
+);
 
 // Insert data into the database
 async function insertMockData() {
   try {
+    // Check if data already exists
+    const userExists = await UserModel.findOne();
+    const categoryExists = await CategoryModel.findOne();
+    const threadExists = await ThreadModel.findOne();
+    const commentExists = await CommentModel.findOne();
+
+    if (userExists || categoryExists || threadExists || commentExists) {
+      console.log("Mock data already exists. Exiting script.");
+      return;
+    }
+
     await UserModel.insertMany(users);
     console.log("Users inserted successfully.");
 
