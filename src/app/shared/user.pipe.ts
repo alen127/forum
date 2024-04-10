@@ -1,9 +1,9 @@
-import { Pipe, PipeTransform, inject } from '@angular/core';
-import { UserService } from '../auth/user.service';
-import { map } from 'rxjs';
+import { Pipe, PipeTransform, inject } from "@angular/core";
+import { UserService } from "../auth/user.service";
+import { map } from "rxjs";
 
 @Pipe({
-  name: 'user',
+  name: "user",
   standalone: true,
 })
 export class UserPipe implements PipeTransform {

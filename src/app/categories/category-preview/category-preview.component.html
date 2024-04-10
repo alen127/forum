@@ -1,83 +1,90 @@
-@if(category){
-<div class="category card">
-  @if(!isBeingEdited){
-  <a [routerLink]="['/forum', category._id]" class="text-decoration-none">
-    <div class="card-body">
-      <h3 class="card-title">{{ category.name }}</h3>
-      <div class="card-subtitle mb-2 text-muted">
-        {{ category.description }}
+@if (category) {
+  <div class="category card">
+    @if (!isBeingEdited) {
+      <a [routerLink]="['/forum', category._id]" class="text-decoration-none">
+        <div class="card-body">
+          <h3 class="card-title">{{ category.name }}</h3>
+          <div class="card-subtitle mb-2 text-muted">
+            {{ category.description }}
+          </div>
+        </div>
+      </a>
+    } @else if (isBeingEdited && editedCategory) {
+      <div class="card-body">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            name="editedName"
+            id="editedName"
+            [class.is-invalid]="name.invalid && (name.dirty || name.touched)"
+            placeholder="Name"
+            required
+            minlength="4"
+            maxlength="30"
+            [(ngModel)]="editedCategory.name"
+            #name="ngModel"
+          />
+          @if (name.invalid && (name.dirty || name.touched)) {
+            <div class="invalid-feedback d-block">
+              @if (name.errors?.["required"]) {
+                <div>Name is required.</div>
+              }
+              @if (name.errors?.["minlength"]) {
+                <div>Name must be at least 4 characters long.</div>
+              }
+              @if (name.errors?.["maxlength"]) {
+                <div>Name must not exceed 30 characters.</div>
+              }
+            </div>
+          }
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control mt-2"
+            name="editedDescription"
+            id="editedDescription"
+            [class.is-invalid]="
+              description.invalid && (description.dirty || description.touched)
+            "
+            placeholder="Description"
+            required
+            minlength="10"
+            maxlength="100"
+            [(ngModel)]="editedCategory.description"
+            #description="ngModel"
+          />
+          @if (
+            description.invalid && (description.dirty || description.touched)
+          ) {
+            <div class="invalid-feedback d-block">
+              @if (description.errors?.["required"]) {
+                <div>Description is required.</div>
+              }
+              @if (description.errors?.["minlength"]) {
+                <div>Description must be at least 10 characters long.</div>
+              }
+              @if (description.errors?.["maxlength"]) {
+                <div>Description must not exceed 100 characters.</div>
+              }
+            </div>
+          }
+        </div>
+        <button class="btn btn-success mt-2" (click)="onEdit()">Confirm</button>
       </div>
-    </div>
-  </a>
-  } @else if(isBeingEdited && editedCategory){
-  <div class="card-body">
-    <div class="form-group">
-      <input
-        type="text"
-        class="form-control"
-        name="editedName"
-        id="editedName"
-        [class.is-invalid]="name.invalid && (name.dirty || name.touched)"
-        placeholder="Name"
-        required
-        minlength="4"
-        maxlength="30"
-        [(ngModel)]="editedCategory.name"
-        #name="ngModel"
-      />
-      @if(name.invalid && (name.dirty || name.touched)){
-      <div class="invalid-feedback d-block">
-        @if(name.errors?.['required']){
-        <div>Name is required.</div>
-        } @if(name.errors?.['minlength']){
-        <div>Name must be at least 4 characters long.</div>
-        } @if(name.errors?.['maxlength']){
-        <div>Name must not exceed 30 characters.</div>
-        }
+    }
+    @if (userIsAdmin) {
+      <div class="card-footer">
+        <button
+          class="btn"
+          [class]="isBeingEdited ? 'btn-warning' : 'btn-primary'"
+          (click)="onBeginEdit()"
+        >
+          {{ isBeingEdited ? "Cancel" : "Edit" }}
+        </button>
+        <button class="btn btn-danger ms-2" (click)="onDelete()">Delete</button>
       </div>
-      }
-    </div>
-    <div class="form-group">
-      <input
-        type="text"
-        class="form-control mt-2"
-        name="editedDescription"
-        id="editedDescription"
-        [class.is-invalid]="
-          description.invalid && (description.dirty || description.touched)
-        "
-        placeholder="Description"
-        required
-        minlength="10"
-        maxlength="100"
-        [(ngModel)]="editedCategory.description"
-        #description="ngModel"
-      />
-      @if(description.invalid && (description.dirty || description.touched)){
-      <div class="invalid-feedback d-block">
-        @if(description.errors?.['required']){
-        <div>Description is required.</div>
-        } @if(description.errors?.['minlength']){
-        <div>Description must be at least 10 characters long.</div>
-        } @if(description.errors?.['maxlength']){
-        <div>Description must not exceed 100 characters.</div>
-        }
-      </div>
-      }
-    </div>
-    <button class="btn btn-success mt-2" (click)="onEdit()">Confirm</button>
+    }
   </div>
-  } @if(userIsAdmin){
-  <div class="card-footer">
-    <button
-      class="btn"
-      [class]="isBeingEdited ? 'btn-warning' : 'btn-primary'"
-      (click)="onBeginEdit()"
-    >
-      {{ isBeingEdited ? "Cancel" : "Edit" }}
-    </button>
-    <button class="btn btn-danger ms-2" (click)="onDelete()">Delete</button>
-  </div>
-  }
-</div>
 }

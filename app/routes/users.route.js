@@ -57,7 +57,7 @@ router.patch("/:id", async (req, res) => {
     const updatedUser = await UserModel.findByIdAndUpdate(
       req.params.id,
       updatedFields,
-      { new: true }
+      { new: true },
     );
     if (!updatedUser)
       return res.status(404).json({ message: "User not found" });

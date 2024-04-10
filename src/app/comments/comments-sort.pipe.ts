@@ -1,8 +1,8 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { Comment } from '../shared/models/comment.model';
+import { Pipe, PipeTransform } from "@angular/core";
+import { Comment } from "../shared/models/comment.model";
 
 @Pipe({
-  name: 'commentsSort',
+  name: "commentsSort",
   standalone: true,
 })
 export class CommentsSortPipe implements PipeTransform {

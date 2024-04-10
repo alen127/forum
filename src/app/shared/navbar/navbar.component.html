@@ -8,12 +8,12 @@
         >
       </li>
     </ul>
-    @if(user | async; as user){
-    <ul class="navbar-nav ms-auto">
-      <li class="nav-item">
-        <span>Logged in as {{ user.username }}</span>
-      </li>
-    </ul>
+    @if (user | async; as user) {
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <span>Logged in as {{ user.username }}</span>
+        </li>
+      </ul>
     }
   </div>
 </nav>

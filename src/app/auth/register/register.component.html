@@ -16,16 +16,18 @@
         [(ngModel)]="user.username"
         #username="ngModel"
       />
-      @if(username.invalid && (username.dirty || username.touched)){
-      <div class="invalid-feedback d-block">
-        @if(username.errors?.['required']){
-        <div>Username is required.</div>
-        } @if(username.errors?.['minlength']){
-        <div>Username must be at least 3 characters long.</div>
-        } @if(username.errors?.['maxlength']){
-        <div>Username must not exceed 20 characters.</div>
-        }
-      </div>
+      @if (username.invalid && (username.dirty || username.touched)) {
+        <div class="invalid-feedback d-block">
+          @if (username.errors?.["required"]) {
+            <div>Username is required.</div>
+          }
+          @if (username.errors?.["minlength"]) {
+            <div>Username must be at least 3 characters long.</div>
+          }
+          @if (username.errors?.["maxlength"]) {
+            <div>Username must not exceed 20 characters.</div>
+          }
+        </div>
       }
     </div>
 
@@ -42,14 +44,15 @@
         [(ngModel)]="user.email"
         #email="ngModel"
       />
-      @if(email.invalid && (email.dirty || email.touched)){
-      <div class="invalid-feedback d-block">
-        @if(email.errors?.['required']){
-        <div>Email is required.</div>
-        } @if(email.errors?.['email']){
-        <div>Email is not valid.</div>
-        }
-      </div>
+      @if (email.invalid && (email.dirty || email.touched)) {
+        <div class="invalid-feedback d-block">
+          @if (email.errors?.["required"]) {
+            <div>Email is required.</div>
+          }
+          @if (email.errors?.["email"]) {
+            <div>Email is not valid.</div>
+          }
+        </div>
       }
     </div>
 
@@ -68,14 +71,15 @@
         [(ngModel)]="user.password"
         #password="ngModel"
       />
-      @if(password.invalid && (password.dirty || password.touched)){
-      <div class="invalid-feedback d-block">
-        @if(password.errors?.['required']){
-        <div>Password is required.</div>
-        } @if(password.errors?.['minlength']){
-        <div>Password must be at least 4 characters long.</div>
-        }
-      </div>
+      @if (password.invalid && (password.dirty || password.touched)) {
+        <div class="invalid-feedback d-block">
+          @if (password.errors?.["required"]) {
+            <div>Password is required.</div>
+          }
+          @if (password.errors?.["minlength"]) {
+            <div>Password must be at least 4 characters long.</div>
+          }
+        </div>
       }
     </div>
 
@@ -95,17 +99,21 @@
         [(ngModel)]="checkPassword"
         #repeatPassword="ngModel"
       />
-      @if((repeatPassword.invalid || checkPassword !== user.password) &&
-      (repeatPassword.dirty || repeatPassword.touched)){
-      <div class="invalid-feedback d-block">
-        @if(repeatPassword.errors?.['required']){
-        <div>Password is required.</div>
-        } @if(repeatPassword.errors?.['minlength']){
-        <div>Password must be at least 4 characters long.</div>
-        } @if(checkPassword!==user.password){
-        <div>Passwords must match.</div>
-        }
-      </div>
+      @if (
+        (repeatPassword.invalid || checkPassword !== user.password) &&
+        (repeatPassword.dirty || repeatPassword.touched)
+      ) {
+        <div class="invalid-feedback d-block">
+          @if (repeatPassword.errors?.["required"]) {
+            <div>Password is required.</div>
+          }
+          @if (repeatPassword.errors?.["minlength"]) {
+            <div>Password must be at least 4 characters long.</div>
+          }
+          @if (checkPassword !== user.password) {
+            <div>Passwords must match.</div>
+          }
+        </div>
       }
     </div>
 
@@ -117,7 +125,7 @@
       Register
     </button>
     @if (message) {
-    <div class="alert alert-warning">{{ message }}</div>
+      <div class="alert alert-warning">{{ message }}</div>
     }
     <div class="login">
       <a routerLink="/login" class="text-decoration-none"

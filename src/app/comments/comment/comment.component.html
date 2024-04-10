@@ -1,58 +1,63 @@
-@if(comment){
-<div class="category card mt-2">
-  <div class="card-body">
-    <h5 class="card-title">{{ comment.user_id | user | async }}</h5>
-    @if(!isBeingEdited){
-    <div class="card-text">{{ comment.content }}</div>
-    } @else if(isBeingEdited && editedComment){
-    <form (ngSubmit)="onEdit()" #editCommentForm="ngForm">
-      <div class="form-group">
-        <textarea
-          name="content"
-          id="content"
-          class="form-control mt-2"
-          [class.is-invalid]="
-            content.invalid && (content.dirty || content.touched)
-          "
-          required
-          rows="4"
-          [(ngModel)]="editedComment.content"
-          #content="ngModel"
-        ></textarea>
-        @if(content.invalid && (content.dirty || content.touched)){
-        <div class="invalid-feedback d-block">
-          @if(content.errors?.['required']){
-          <div>Enter some text!</div>
-          }
-        </div>
-        }
+@if (comment) {
+  <div class="category card mt-2">
+    <div class="card-body">
+      <h5 class="card-title">{{ comment.user_id | user | async }}</h5>
+      @if (!isBeingEdited) {
+        <div class="card-text">{{ comment.content }}</div>
+      } @else if (isBeingEdited && editedComment) {
+        <form (ngSubmit)="onEdit()" #editCommentForm="ngForm">
+          <div class="form-group">
+            <textarea
+              name="content"
+              id="content"
+              class="form-control mt-2"
+              [class.is-invalid]="
+                content.invalid && (content.dirty || content.touched)
+              "
+              required
+              rows="4"
+              [(ngModel)]="editedComment.content"
+              #content="ngModel"
+            ></textarea>
+            @if (content.invalid && (content.dirty || content.touched)) {
+              <div class="invalid-feedback d-block">
+                @if (content.errors?.["required"]) {
+                  <div>Enter some text!</div>
+                }
+              </div>
+            }
+          </div>
+          <button
+            type="submit"
+            class="btn btn-success mt-2"
+            [disabled]="!editCommentForm.valid"
+          >
+            Confirm
+          </button>
+        </form>
+      }
+      <div class="card-subtitle text-muted mt-2">
+        {{ comment.created_at | date: "HH:mm, dd.MM.yyyy" }}
       </div>
-      <button
-        type="submit"
-        class="btn btn-success mt-2"
-        [disabled]="!editCommentForm.valid"
-      >
-        Confirm
-      </button>
-    </form>
-    }
-    <div class="card-subtitle text-muted mt-2">
-      {{ comment.created_at | date : "HH:mm, dd.MM.yyyy" }}
     </div>
+    @if (user | async; as user) {
+      @if (user._id === comment.user_id) {
+        <div class="card-footer">
+          <button
+            (click)="onBeginEdit()"
+            class="btn"
+            [class]="isBeingEdited ? 'btn-warning' : 'btn-primary'"
+          >
+            {{ isBeingEdited ? "Cancel" : "Edit" }}
+          </button>
+          <button (click)="onDelete()" class="btn btn-danger ms-2">
+            Delete
+          </button>
+        </div>
+        @if (errorMessage) {
+          <p>{{ errorMessage }}</p>
+        }
+      }
+    }
   </div>
-  @if(user|async;as user){ @if(user._id === comment.user_id){
-  <div class="card-footer">
-    <button
-      (click)="onBeginEdit()"
-      class="btn"
-      [class]="isBeingEdited ? 'btn-warning' : 'btn-primary'"
-    >
-      {{ isBeingEdited ? "Cancel" : "Edit" }}
-    </button>
-    <button (click)="onDelete()" class="btn btn-danger ms-2">Delete</button>
-  </div>
-  @if (errorMessage) {
-  <p>{{ errorMessage }}</p>
-  } }}
-</div>
 }

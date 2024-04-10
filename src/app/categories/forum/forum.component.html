@@ -1,93 +1,105 @@
 <app-navbar></app-navbar>
 <div class="container">
-  @if(categories | async; as categories){ @if(categories.length===0){
-  <div class="container text-center fs-4 mt-2">
-    No categories found, add some!
-  </div>
+  @if (categories | async; as categories) {
+    @if (categories.length === 0) {
+      <div class="container text-center fs-4 mt-2">
+        No categories found, add some!
+      </div>
+    }
+    <ul class="list-unstyled">
+      @for (category of categories; track category._id) {
+        <li>
+          <app-category-preview
+            class="ms-2"
+            [category]="category"
+          ></app-category-preview>
+        </li>
+      }
+    </ul>
+  } @else {}
+  @if (user | async; as user) {
+    @if (user.role === "admin") {
+      <button
+        class="btn btn-success"
+        [class.btn-danger]="isAdding"
+        (click)="isAdding = !isAdding"
+      >
+        {{ isAdding ? "Cancel" : "Add Category" }}
+      </button>
+    }
+    @if (isAdding) {
+      <form class="my-2" (ngSubmit)="onSubmit()" #addCategoryForm="ngForm">
+        <div class="form-group">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            [class.is-invalid]="name.invalid && (name.dirty || name.touched)"
+            placeholder="Name"
+            required
+            minlength="4"
+            maxlength="30"
+            [(ngModel)]="newCategory.name"
+            #name="ngModel"
+          />
+          @if (name.invalid && (name.dirty || name.touched)) {
+            <div class="invalid-feedback d-block">
+              @if (name.errors?.["required"]) {
+                <div>Name is required.</div>
+              }
+              @if (name.errors?.["minlength"]) {
+                <div>Name must be at least 4 characters long.</div>
+              }
+              @if (name.errors?.["maxlength"]) {
+                <div>Name must not exceed 30 characters.</div>
+              }
+            </div>
+          }
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            id="description"
+            name="description"
+            class="form-control mt-2"
+            [class.is-invalid]="
+              description.invalid && (description.dirty || description.touched)
+            "
+            placeholder="Description"
+            required
+            minlength="10"
+            maxlength="100"
+            [(ngModel)]="newCategory.description"
+            #description="ngModel"
+          />
+          @if (
+            description.invalid && (description.dirty || description.touched)
+          ) {
+            <div class="invalid-feedback d-block">
+              @if (description.errors?.["required"]) {
+                <div>Description is required.</div>
+              }
+              @if (description.errors?.["minlength"]) {
+                <div>Description must be at least 10 characters long.</div>
+              }
+              @if (description.errors?.["maxlength"]) {
+                <div>Description must not exceed 100 characters.</div>
+              }
+            </div>
+          }
+        </div>
+        <button
+          class="btn btn-success mt-2"
+          type="submit"
+          [disabled]="!addCategoryForm.valid"
+        >
+          Confirm
+        </button>
+        @if (addCategoryMessage) {
+          <div class="alert alert-info">{{ addCategoryMessage }}</div>
+        }
+      </form>
+    }
   }
-  <ul class="list-unstyled">
-    @for (category of categories; track category._id) {
-    <li>
-      <app-category-preview
-        class="ms-2"
-        [category]="category"
-      ></app-category-preview>
-    </li>
-    }
-  </ul>
-  }@else { } @if(user|async;as user){ @if(user.role==="admin"){
-  <button
-    class="btn btn-success"
-    [class.btn-danger]="isAdding"
-    (click)="isAdding = !isAdding"
-  >
-    {{ isAdding ? "Cancel" : "Add Category" }}</button
-  >} @if(isAdding){
-  <form class="my-2" (ngSubmit)="onSubmit()" #addCategoryForm="ngForm">
-    <div class="form-group">
-      <input
-        type="text"
-        id="name"
-        name="name"
-        class="form-control"
-        [class.is-invalid]="name.invalid && (name.dirty || name.touched)"
-        placeholder="Name"
-        required
-        minlength="4"
-        maxlength="30"
-        [(ngModel)]="newCategory.name"
-        #name="ngModel"
-      />
-      @if(name.invalid && (name.dirty || name.touched)){
-      <div class="invalid-feedback d-block">
-        @if(name.errors?.['required']){
-        <div>Name is required.</div>
-        } @if(name.errors?.['minlength']){
-        <div>Name must be at least 4 characters long.</div>
-        } @if(name.errors?.['maxlength']){
-        <div>Name must not exceed 30 characters.</div>
-        }
-      </div>
-      }
-    </div>
-    <div class="form-group">
-      <input
-        type="text"
-        id="description"
-        name="description"
-        class="form-control mt-2"
-        [class.is-invalid]="
-          description.invalid && (description.dirty || description.touched)
-        "
-        placeholder="Description"
-        required
-        minlength="10"
-        maxlength="100"
-        [(ngModel)]="newCategory.description"
-        #description="ngModel"
-      />
-      @if(description.invalid && (description.dirty || description.touched)){
-      <div class="invalid-feedback d-block">
-        @if(description.errors?.['required']){
-        <div>Description is required.</div>
-        } @if(description.errors?.['minlength']){
-        <div>Description must be at least 10 characters long.</div>
-        } @if(description.errors?.['maxlength']){
-        <div>Description must not exceed 100 characters.</div>
-        }
-      </div>
-      }
-    </div>
-    <button
-      class="btn btn-success mt-2"
-      type="submit"
-      [disabled]="!addCategoryForm.valid"
-    >
-      Confirm
-    </button>
-    @if(addCategoryMessage){
-    <div class="alert alert-info">{{ addCategoryMessage }}</div>
-    }
-  </form>
-  }}
 </div>

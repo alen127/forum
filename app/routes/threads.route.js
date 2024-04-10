@@ -82,7 +82,7 @@ router.patch("/:id", async (req, res) => {
     const updatedThread = await ThreadModel.findByIdAndUpdate(
       req.params.id,
       updatedFields,
-      { new: true }
+      { new: true },
     );
     if (!updatedThread)
       return res.status(404).json({ message: "Thread not found" });

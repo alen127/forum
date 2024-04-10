@@ -1,29 +1,29 @@
-import { Component, Input } from '@angular/core';
-import { AsyncPipe, DatePipe } from '@angular/common';
-import { Observable } from 'rxjs';
-import { FormsModule } from '@angular/forms';
-import { CommentService } from '../comment.service';
-import { UserPipe } from '../../shared/user.pipe';
-import { User } from '../../shared/models/user.model';
-import { AuthService } from '../../auth/auth.service';
-import { Comment } from '../../shared/models/comment.model';
+import { Component, Input } from "@angular/core";
+import { AsyncPipe, DatePipe } from "@angular/common";
+import { Observable } from "rxjs";
+import { FormsModule } from "@angular/forms";
+import { CommentService } from "../comment.service";
+import { UserPipe } from "../../shared/user.pipe";
+import { User } from "../../shared/models/user.model";
+import { AuthService } from "../../auth/auth.service";
+import { Comment } from "../../shared/models/comment.model";
 
 @Component({
-  selector: 'app-comment',
+  selector: "app-comment",
   standalone: true,
   imports: [DatePipe, UserPipe, AsyncPipe, FormsModule],
-  templateUrl: './comment.component.html',
-  styleUrl: './comment.component.css',
+  templateUrl: "./comment.component.html",
+  styleUrl: "./comment.component.css",
 })
 export class CommentComponent {
   @Input() comment: Comment | null = null;
   user: Observable<User | null>;
   editedComment: Comment | null = null;
   isBeingEdited: boolean = false;
-  errorMessage: string = '';
+  errorMessage: string = "";
   constructor(
     private authService: AuthService,
-    private commentService: CommentService
+    private commentService: CommentService,
   ) {
     this.user = authService.user$;
   }
@@ -40,11 +40,11 @@ export class CommentComponent {
       this.commentService.editComment(this.editedComment).subscribe({
         next: () => {
           this.isBeingEdited = false;
-          this.errorMessage = '';
+          this.errorMessage = "";
         },
         error: (err) => {
-          console.log('Failed to edit comment', err);
-          this.errorMessage = 'Failed to edit comment';
+          console.log("Failed to edit comment", err);
+          this.errorMessage = "Failed to edit comment";
         },
       });
     }

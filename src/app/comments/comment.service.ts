@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
-import { HttpClient } from '@angular/common/http';
-import { Comment } from '../shared/models/comment.model';
-import { BehaviorSubject, catchError, of, tap } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { environment } from "../../environments/environment";
+import { HttpClient } from "@angular/common/http";
+import { Comment } from "../shared/models/comment.model";
+import { BehaviorSubject, catchError, of, tap } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CommentService {
-  private threadUrl = environment.apiUrl + '/threads';
-  private commentUrl = environment.apiUrl + '/comments';
+  private threadUrl = environment.apiUrl + "/threads";
+  private commentUrl = environment.apiUrl + "/comments";
   private commentsSubject = new BehaviorSubject<Comment[]>([]);
   comments$ = this.commentsSubject.asObservable();
 
@@ -36,9 +36,9 @@ export class CommentService {
         this.loadComments(comment.thread_id);
       }),
       catchError((err) => {
-        console.error('Error adding comment', err);
+        console.error("Error adding comment", err);
         return of(null);
-      })
+      }),
     );
   }
   editComment(comment: Comment) {
@@ -49,9 +49,9 @@ export class CommentService {
           this.loadComments(comment.thread_id);
         }),
         catchError((err) => {
-          console.error('Failed to edit comment', err);
+          console.error("Failed to edit comment", err);
           return of(null);
-        })
+        }),
       );
   }
   deleteComment(id: string) {

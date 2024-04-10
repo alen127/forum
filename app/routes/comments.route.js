@@ -68,7 +68,7 @@ router.patch("/:id", async (req, res) => {
     const updatedComment = await CommentModel.findByIdAndUpdate(
       req.params.id,
       updatedFields,
-      { new: true }
+      { new: true },
     );
     if (!updatedComment)
       return res.status(404).json({ message: "Comment not found" });

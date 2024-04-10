@@ -1,11 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, of, tap } from 'rxjs';
-import { User } from '../shared/models/user.model';
-import { environment } from '../../environments/environment.development';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, catchError, of, tap } from "rxjs";
+import { User } from "../shared/models/user.model";
+import { environment } from "../../environments/environment";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AuthService {
   private userSubject: BehaviorSubject<User | null> =
@@ -13,7 +13,7 @@ export class AuthService {
   private token: string | null = null;
   user$ = this.userSubject.asObservable();
   constructor(private http: HttpClient) {
-    this.token = localStorage.getItem('token');
+    this.token = localStorage.getItem("token");
   }
 
   whoAmI() {
@@ -24,10 +24,10 @@ export class AuthService {
         }
       }),
       catchError((error: any) => {
-        console.error('Failed to authenticate', error);
+        console.error("Failed to authenticate", error);
         this.logout();
         return of(null);
-      })
+      }),
     );
   }
 
@@ -38,27 +38,27 @@ export class AuthService {
     return this.http.post<User>(`${environment.apiUrl}/auth/login`, user).pipe(
       tap((res: any) => {
         this.token = res.accessToken;
-        localStorage.setItem('token', res.accessToken);
+        localStorage.setItem("token", res.accessToken);
         this.userSubject.next(res.user);
-      })
+      }),
     );
   }
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     this.token = null;
     this.userSubject.next(null);
   }
 
   getAuthToken() {
     if (!this.token) {
-      this.token = localStorage.getItem('token');
+      this.token = localStorage.getItem("token");
     }
     return this.token;
   }
 
   isAdmin() {
     const user = this.userSubject.getValue();
-    if (user && user.role === 'admin') {
+    if (user && user.role === "admin") {
       return true;
     }
     return false;

@@ -1,14 +1,14 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
-import { Category } from '../shared/models/category.model';
-import { BehaviorSubject, catchError, of, tap } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { environment } from "../../environments/environment";
+import { Category } from "../shared/models/category.model";
+import { BehaviorSubject, catchError, of, tap } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CategoryService {
-  private categoryUrl = environment.apiUrl + '/categories';
+  private categoryUrl = environment.apiUrl + "/categories";
   private categoriesSubject = new BehaviorSubject<Category[]>([]);
   categories$ = this.categoriesSubject.asObservable();
 
@@ -21,7 +21,7 @@ export class CategoryService {
     this.http.get<Category[]>(this.categoryUrl).subscribe({
       next: (categories) => this.categoriesSubject.next(categories),
       error: (error) => {
-        console.error('Failed to get categories', error);
+        console.error("Failed to get categories", error);
       },
     });
   }
@@ -32,9 +32,9 @@ export class CategoryService {
         this.loadCategories();
       }),
       catchError((error) => {
-        console.error('Failed to add category', error);
+        console.error("Failed to add category", error);
         return of(null);
-      })
+      }),
     );
   }
 
@@ -43,7 +43,7 @@ export class CategoryService {
     this.http.delete(`${this.categoryUrl}/${id}`).subscribe({
       next: () => this.loadCategories(),
       error: (error) => {
-        console.error('Failed to delete category', error);
+        console.error("Failed to delete category", error);
       },
     });
   }
@@ -52,7 +52,7 @@ export class CategoryService {
     this.http.patch<Category>(`${this.categoryUrl}/${id}`, category).subscribe({
       next: () => this.loadCategories(),
       error: (error) => {
-        console.error('Failed to update category', error);
+        console.error("Failed to update category", error);
       },
     });
   }

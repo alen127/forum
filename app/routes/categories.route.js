@@ -84,7 +84,7 @@ router.patch("/:id", async (req, res) => {
     const updatedCategory = await CategoryModel.findByIdAndUpdate(
       req.params.id,
       updatedFields,
-      { new: true }
+      { new: true },
     );
     if (!updatedCategory)
       return res.status(404).json({ message: "Category not found" });

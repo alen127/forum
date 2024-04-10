@@ -1,20 +1,20 @@
-import { Component, Input } from '@angular/core';
-import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
-import { Observable } from 'rxjs';
-import { ThreadService } from '../thread.service';
-import { FormsModule } from '@angular/forms';
-import { Thread } from '../../shared/models/thread.model';
-import { NavbarComponent } from '../../shared/navbar/navbar.component';
-import { CommentComponent } from '../../comments/comment/comment.component';
-import { UserPipe } from '../../shared/user.pipe';
-import { CommentsSortPipe } from '../../comments/comments-sort.pipe';
-import { CommentService } from '../../comments/comment.service';
-import { AuthService } from '../../auth/auth.service';
-import { User } from '../../shared/models/user.model';
-import { Comment } from '../../shared/models/comment.model';
+import { Component, Input } from "@angular/core";
+import { AsyncPipe, DatePipe, NgIf } from "@angular/common";
+import { Observable } from "rxjs";
+import { ThreadService } from "../thread.service";
+import { FormsModule } from "@angular/forms";
+import { Thread } from "../../shared/models/thread.model";
+import { NavbarComponent } from "../../shared/navbar/navbar.component";
+import { CommentComponent } from "../../comments/comment/comment.component";
+import { UserPipe } from "../../shared/user.pipe";
+import { CommentsSortPipe } from "../../comments/comments-sort.pipe";
+import { CommentService } from "../../comments/comment.service";
+import { AuthService } from "../../auth/auth.service";
+import { User } from "../../shared/models/user.model";
+import { Comment } from "../../shared/models/comment.model";
 
 @Component({
-  selector: 'app-thread',
+  selector: "app-thread",
   standalone: true,
   imports: [
     NavbarComponent,
@@ -25,8 +25,8 @@ import { Comment } from '../../shared/models/comment.model';
     FormsModule,
     CommentsSortPipe,
   ],
-  templateUrl: './thread.component.html',
-  styleUrl: './thread.component.css',
+  templateUrl: "./thread.component.html",
+  styleUrl: "./thread.component.css",
 })
 export class ThreadComponent {
   comments: Observable<Comment[]>;
@@ -34,13 +34,13 @@ export class ThreadComponent {
   isBeingEdited: boolean = false;
   editedThread: Thread | null = null;
   user: Observable<User | null>;
-  editMessage: string = '';
+  editMessage: string = "";
   newComment: Partial<Comment> = {};
-  newCommentMessage: string = '';
+  newCommentMessage: string = "";
   constructor(
     private threadService: ThreadService,
     private commentService: CommentService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.user = authService.user$;
     this.comments = commentService.comments$;
@@ -74,8 +74,8 @@ export class ThreadComponent {
             }
           },
           error: (err) => {
-            this.editMessage = 'Failed to edit thread';
-            console.error('Failed to edit thread', err);
+            this.editMessage = "Failed to edit thread";
+            console.error("Failed to edit thread", err);
           },
         });
     }
@@ -83,12 +83,12 @@ export class ThreadComponent {
   onCommentSubmit() {
     this.commentService.addComment(this.newComment as Comment).subscribe({
       next: () => {
-        this.newCommentMessage = '';
-        this.newComment.content = '';
+        this.newCommentMessage = "";
+        this.newComment.content = "";
       },
       error: (err) => {
-        this.newCommentMessage = 'Failed to add new comment.';
-        console.error('Failed to add new comment', err);
+        this.newCommentMessage = "Failed to add new comment.";
+        console.error("Failed to add new comment", err);
       },
     });
   }
