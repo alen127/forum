@@ -13,6 +13,9 @@
 npm-debug.log
 yarn-error.log
 
+# Angular
+.angular
+
 # IDEs and editors
 .idea/
 .project
@@ -21,6 +24,7 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
+.editorconfig
 
 # Visual Studio Code
 .vscode
@@ -33,6 +37,7 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+.prettier*
 
 # System files
 .DS_Store
