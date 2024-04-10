@@ -1,0 +1,23 @@
+services:
+  forum-app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_USER=user
+      - MONGO_PASSWORD=password
+      - ACCESS_TOKEN_SECRET=secret
+    depends_on:
+      - mongo
+    command: /bin/sh -c "node dbInit.js && node server.js"
+
+  mongo:
+    image: mongo:7
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo-db:/data/db
+    
+volumes:
+  mongo-db: 
