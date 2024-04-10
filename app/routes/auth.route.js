@@ -1,10 +1,10 @@
-require("dotenv").config();
 const express = require("express");
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/user.model");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const authenticateToken = require("../middleware/jwt");
+const { ACCESS_TOKEN_SECRET } = require("../../config/config");
 
 router.post("/register", async (req, res) => {
   //Check to see if username already exists
@@ -48,7 +48,7 @@ router.post("/login", async (req, res) => {
       //Authorize user
       jwt.sign(
         userPayload,
-        process.env.ACCESS_TOKEN_SECRET,
+        ACCESS_TOKEN_SECRET,
         { expiresIn: 3600 },
         (err, token) => {
           if (err) {
@@ -59,7 +59,7 @@ router.post("/login", async (req, res) => {
           } else {
             res.json({ user: userPayload, accessToken: token });
           }
-        }
+        },
       );
     } else res.status(400).json({ message: "Wrong password" });
   } catch (err) {
