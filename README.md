@@ -1,28 +1,23 @@
 ## About
+
 Fullstack single-page web app developed for one of my university classes using the MEAN stack. It is a simple forum with categories, threads and comments.
 
 ## Running the app
 
-Create a .env file like so:
-```
-DB_CONNECTION_STRING=mongodb://localhost:27017/dbname
-PORT=8080
-ACCESS_TOKEN_SECRET=example
-```
+### Using docker compose
 
-Run `npm install` to install all neccessary dependencies.
-When that is complete run `node dbInit.js` to initialize the database with some sample data.
-It creates two users you can log in with, one with admin privileges and the other without:
-```
+Run `docker compose up -d` in the root directory of the project and then open `localhost:3000` in your web browser.
+
+Two default users are created, **root** has admin privileges while **regular** does not:
+  ```
   username: root
   password: rootpass
-```
+  ```
 and
-```
+  ```
   username: regular
   password: regpass
-```
-Run `node server.js` to start the server.
+  ```
 
 # Forum
 
