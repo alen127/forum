@@ -1,48 +1,28 @@
-## About
+# About
 
 Fullstack single-page web app developed for one of my university classes using the MEAN stack. It is a simple forum with categories, threads and comments.
 
-## Running the app
+# Preview
+![Categories page](images/categories.png)
+![Post](images/post.png)
 
-### Using docker compose
+# Running the app
 
-Run `docker compose up -d` in the root directory of the project and then open `localhost:3000` in your web browser.
+## Using docker compose
 
-Two default users are created, **root** has admin privileges while **regular** does not:
+Run `docker compose up -d` in the root directory of the project and open `localhost:3000` in your web browser.
+
+Two default users are created: root and regular.
+
+ **root** has admin privileges while **regular** does not.
+
+### Logging in as root
   ```
   username: root
   password: rootpass
   ```
-and
+### Logging in as regular
   ```
   username: regular
   password: regpass
   ```
-
-# Forum
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.0.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
